@@ -21,7 +21,7 @@ const csrfProtection = csrf({ cookie: true })
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
 
 app.use(csrfProtection)
-app.get('/csrf-token', (req, res) => {
+app.get('/auth/csrf-token', (req, res) => {
     res.json({
         csrfToken: req.csrfToken(),
     })
