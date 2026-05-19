@@ -108,6 +108,10 @@ export const getOrders = async (
             filters.$or = searchConditions
         }
 
+        if (typeof sortField !== 'string' || typeof sortOrder !== 'string') {
+            return next(new BadRequestError('Некорректные параметры'))
+        }
+
         const sort: { [key: string]: any } = {}
 
         if (sortField && sortOrder) {
