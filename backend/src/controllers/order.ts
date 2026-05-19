@@ -28,7 +28,8 @@ export const getOrders = async (
             search,
         } = req.query
 
-        const filters: FilterQuery<Partial<IOrder>> = {}
+        const rawFilters = req.query
+        const filters: FilterQuery<Partial<IOrder>> = sanitizeQuery(rawFilters)
 
         if (status) {
             // if (typeof status === 'object') {
