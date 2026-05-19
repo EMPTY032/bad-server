@@ -8,16 +8,17 @@ import {
     register,
     updateCurrentUser,
 } from '../controllers/auth'
-import auth from '../middlewares/auth'
+import auth, { roleGuardMiddleware } from '../middlewares/auth'
 import {
     validateLogin,
     validateRegister,
     validateUpdateUser,
 } from '../utils/validate'
+import { Role } from '../models/user'
 
 const authRouter = Router()
 
-authRouter.get('/user', auth, getCurrentUser)
+authRouter.get('/user', roleGuardMiddleware(Role.Admin), auth, getCurrentUser)
 authRouter.patch('/me', validateUpdateUser, auth, updateCurrentUser)
 authRouter.get('/user/roles', auth, getCurrentUserRoles)
 authRouter.post('/login', validateLogin, login)
