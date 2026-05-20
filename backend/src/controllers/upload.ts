@@ -36,7 +36,7 @@ export const uploadFile = async (
 
         let metadata
         try {
-            metadata = await sharp(file.buffer).metadata()
+            metadata = await sharp(file.path).metadata()
         } catch {
             return next(
                 new BadRequestError(
@@ -49,15 +49,12 @@ export const uploadFile = async (
             return next(new BadRequestError('Некорректное изображение'))
         }
 
-        const safeName = `${uuidv4()}.png`
-
         const fileName = process.env.UPLOAD_PATH
-            ? `/${process.env.UPLOAD_PATH}/${safeName}`
-            : safeName
+            ? `/${process.env.UPLOAD_PATH}/${file.filename}`
+            : file.filename
 
         return res.status(constants.HTTP_STATUS_CREATED).send({
             fileName,
-            originalName: file.originalname,
         })
     } catch (error) {
         return next(error)
