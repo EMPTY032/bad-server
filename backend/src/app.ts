@@ -24,12 +24,11 @@ const { PORT = 3000 } = process.env
 const app = express()
 
 app.use(cookieParser())
-const csrfProtection = csrf({ cookie: true })
+export const csrfProtection = csrf({ cookie: true })
 
 // app.use(cors())
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
 
-app.use(csrfProtection)
 app.get('/auth/csrf-token', (req, res) => {
     res.json({
         csrfToken: req.csrfToken(),

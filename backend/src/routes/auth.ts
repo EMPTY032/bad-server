@@ -14,15 +14,16 @@ import {
     validateRegister,
     validateUpdateUser,
 } from '../utils/validate'
+import { csrfProtection } from '../app'
 
 const authRouter = Router()
 
 authRouter.get('/user', auth, getCurrentUser)
 authRouter.patch('/me', validateUpdateUser, auth, updateCurrentUser)
 authRouter.get('/user/roles', auth, getCurrentUserRoles)
-authRouter.post('/login', validateLogin, login)
+authRouter.post('/login', csrfProtection, validateLogin, login)
 authRouter.get('/token', refreshAccessToken)
 authRouter.get('/logout', logout)
-authRouter.post('/register', validateRegister, register)
+authRouter.post('/register', csrfProtection, validateRegister, register)
 
 export default authRouter
