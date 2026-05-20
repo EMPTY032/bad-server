@@ -5,12 +5,13 @@ import {
     getCustomers,
     updateCustomer,
 } from '../controllers/customers'
-import auth from '../middlewares/auth'
+import auth, { roleGuardMiddleware } from '../middlewares/auth'
 import { celebrate, Joi } from 'celebrate'
+import { Role } from '../models/user'
 
 const customerRouter = Router()
 
-customerRouter.get('/', auth, getCustomers)
+customerRouter.get('/', roleGuardMiddleware(Role.Admin), auth, getCustomers)
 customerRouter.get(
     '/:id',
     celebrate({
