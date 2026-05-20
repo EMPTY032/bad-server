@@ -14,10 +14,16 @@ import {
     validateRegister,
     validateUpdateUser,
 } from '../utils/validate'
-import { csrfProtection } from '../app'
+import csrf from 'csurf'
 
 const authRouter = Router()
+const csrfProtection = csrf({ cookie: true })
 
+authRouter.get('/csrf-token', (req, res) => {
+    res.json({
+        csrfToken: req.csrfToken(),
+    })
+})
 authRouter.get('/user', auth, getCurrentUser)
 authRouter.patch('/me', validateUpdateUser, auth, updateCurrentUser)
 authRouter.get('/user/roles', auth, getCurrentUserRoles)

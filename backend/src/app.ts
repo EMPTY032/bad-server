@@ -9,7 +9,7 @@ import { DB_ADDRESS } from './config'
 import errorHandler from './middlewares/error-handler'
 import serveStatic from './middlewares/serverStatic'
 import routes from './routes'
-import csrf from 'csurf'
+
 import rateLimit from 'express-rate-limit'
 
 const limiter = rateLimit({
@@ -24,16 +24,9 @@ const { PORT = 3000 } = process.env
 const app = express()
 
 app.use(cookieParser())
-export const csrfProtection = csrf({ cookie: true })
 
 // app.use(cors())
 app.use(cors({ origin: process.env.ORIGIN_ALLOW, credentials: true }))
-
-app.get('/auth/csrf-token', (req, res) => {
-    res.json({
-        csrfToken: req.csrfToken(),
-    })
-})
 
 app.use(express.static(path.join(__dirname, 'public')))
 
