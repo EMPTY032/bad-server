@@ -17,3 +17,6 @@ export const sanitizeQuery = (query: any) => {
 
     return clean
 }
+
+export const escapeRegex = (value: string) =>
+    value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
