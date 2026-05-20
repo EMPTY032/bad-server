@@ -19,9 +19,10 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             scss: {
+                loadPaths: [resolve('./src/scss')],
                 additionalData: `
-          @use "./variables" as *;
-          @use "./mixins";
+          @use "variables" as *;
+          @use "mixins";
         `,
             },
         },
