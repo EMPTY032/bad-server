@@ -2,7 +2,7 @@ import { Request, Express } from 'express'
 import multer, { FileFilterCallback } from 'multer'
 import { mkdirSync } from 'fs'
 import path, { join } from 'path'
-
+import { v4 as uuidv4 } from 'uuid'
 type DestinationCallback = (error: Error | null, destination: string) => void
 type FileNameCallback = (error: Error | null, filename: string) => void
 
@@ -57,6 +57,3 @@ const fileFilter = (
 }
 
 export default multer({ storage, fileFilter })
-function uuidv4() {
-    throw new Error('Function not implemented.')
-}
