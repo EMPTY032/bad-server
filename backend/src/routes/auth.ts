@@ -19,11 +19,12 @@ import csrf from 'csurf'
 const authRouter = Router()
 const csrfProtection = csrf({ cookie: true })
 
-authRouter.get('/csrf-token', (req, res) => {
+authRouter.get('/csrf-token', csrfProtection, (req, res) => {
     res.json({
         csrfToken: req.csrfToken(),
     })
 })
+
 authRouter.get('/user', auth, getCurrentUser)
 authRouter.patch('/me', validateUpdateUser, auth, updateCurrentUser)
 authRouter.get('/user/roles', auth, getCurrentUserRoles)
